@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beginner's Guide: Control Flow</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --text: #334155;
+            --primary: #3b82f6;
+            --code-bg: #1e293b;
+            --highlight: #fbbf24;
+            --success: #22c55e;
+            --error: #ef4444;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            color: #0f172a;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .explainer {
+            background: #eff6ff;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .interactive-zone {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .controls {
+            flex: 1;
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        input[type="number"] {
+            padding: 12px;
+            font-size: 1.2em;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1.1em;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button:hover { background: #2563eb; }
+        
+        .code-window {
+            flex: 1.5;
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 1.1em;
+            line-height: 1.8;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .line {
+            padding: 2px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .active-eval { background-color: var(--highlight); color: #000; font-weight: bold; }
+        .active-success { background-color: var(--success); color: #fff; font-weight: bold; }
+        .active-fail { background-color: var(--error); color: #fff; text-decoration: line-through; }
+        
+        .output-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #10b981;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+        .indent { padding-left: 30px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🧠 How Python Makes Decisions</h1>
+        
+        <div class="explainer">
+            <strong>The "Waterfall" Concept:</strong><br>
+            Python reads conditions from top to bottom. As soon as it finds a statement that is <strong>True</strong>, it executes that block of code and <em>completely ignores the rest</em>. If everything is False, it falls into the <code>else</code> bucket at the very end.
+        </div>
+
+        <div class="interactive-zone">
+            <div class="controls">
+                <h3>Test a Score</h3>
+                <p>Try entering the exam values: <strong>38, 62, 81, or 94</strong>.</p>
+                <input type="number" id="scoreInput" placeholder="e.g. 62">
+                <button onclick="runTrace()">Trace Logic</button>
+            </div>
+
+            <div class="code-window">
+                <div id="l1" class="line">if score < 40:</div>
+                <div id="l2" class="line indent">band = "Support"</div>
+                <div id="l3" class="line">elif score < 70:</div>
+                <div id="l4" class="line indent">band = "Developing"</div>
+                <div id="l5" class="line">elif score < 90:</div>
+                <div id="l6" class="line indent">band = "Strong"</div>
+                <div id="l7" class="line">else:</div>
+                <div id="l8" class="line indent">band = "Excellent"</div>
+            </div>
+        </div>
+
+        <div id="finalOutput" class="output-box"></div>
+
+    </div>
+
+    <script>
+        function resetLines() {
+            for(let i=1; i<=8; i++) {
+                document.getElementById('l'+i).className = 'line' + (i%2===0 ? ' indent' : '');
+            }
+            document.getElementById('finalOutput').style.display = 'none';
+        }
+
+        async function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        async function runTrace() {
+            resetLines();
+            let score = parseInt(document.getElementById('scoreInput').value);
+            if (isNaN(score)) return alert("Please enter a number!");
+
+            let outBox = document.getElementById('finalOutput');
+
+            // Check IF (< 40)
+            document.getElementById('l1').classList.add('active-eval');
+            await wait(1000);
+            if (score < 40) {
+                document.getElementById('l1').classList.replace('active-eval', 'active-success');
+                await wait(500);
+                document.getElementById('l2').classList.add('active-success');
+                outBox.innerText = 'Final Band: "Support"';
+                outBox.style.display = 'block';
+                return;
+            } else {
+                document.getElementById('l1').classList.replace('active-eval', 'active-fail');
+            }
+            await wait(800);
+
+            // Check ELIF (< 70)
+            document.getElementById('l3').classList.add('active-eval');
+            await wait(1000);
+            if (score < 70) {
+                document.getElementById('l3').classList.replace('active-eval', 'active-success');
+                await wait(500);
+                document.getElementById('l4').classList.add('active-success');
+                outBox.innerText = 'Final Band: "Developing"';
+                outBox.style.display = 'block';
+                return;
+            } else {
+                document.getElementById('l3').classList.replace('active-eval', 'active-fail');
+            }
+            await wait(800);
+
+            // Check ELIF (< 90)
+            document.getElementById('l5').classList.add('active-eval');
+            await wait(1000);
+            if (score < 90) {
+                document.getElementById('l5').classList.replace('active-eval', 'active-success');
+                await wait(500);
+                document.getElementById('l6').classList.add('active-success');
+                outBox.innerText = 'Final Band: "Strong"';
+                outBox.style.display = 'block';
+                return;
+            } else {
+                document.getElementById('l5').classList.replace('active-eval', 'active-fail');
+            }
+            await wait(800);
+
+            // ELSE block (Catch-all)
+            document.getElementById('l7').classList.add('active-success');
+            await wait(500);
+            document.getElementById('l8').classList.add('active-success');
+            outBox.innerText = 'Final Band: "Excellent"';
+            outBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q5: Readiness Score Visualizer</title>
+    <style>
+        :root {
+            --bg: #f0fdf4;
+            --text: #1e293b;
+            --primary: #16a34a;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --keyword: #569cd6;
+            --string: #ce9178;
+            --comment: #6a9955;
+            --highlight: #fef08a;
+            --active-band: #22c55e;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            color: #14532d;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+        .explainer {
+            background: #dcfce7;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .workspace {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .controls {
+            flex: 1;
+            min-width: 300px;
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #334155;
+        }
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+        .val-display {
+            float: right;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        /* Code Block */
+        .code-window {
+            flex: 1.5;
+            min-width: 350px;
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 1em;
+            line-height: 1.6;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            overflow-x: auto;
+        }
+        
+        .line { padding: 2px 8px; border-radius: 4px; transition: 0.3s; }
+        .indent-1 { padding-left: 30px; }
+        .indent-2 { padding-left: 60px; }
+        .active-condition { background-color: var(--active-band); color: white; font-weight: bold; }
+        
+        .output-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .score-big { color: #4ade80; font-size: 1.5em; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🛠️ Custom Readiness Score Function</h1>
+        
+        <div class="explainer">
+            <strong>The Logic Weightage:</strong><br>
+            To calculate a score out of 100, we apply weights: <br>
+            • <strong>Attendance:</strong> 40% of final score (Max 100%)<br>
+            • <strong>Diary:</strong> 30% of final score (Max 15 entries)<br>
+            • <strong>Tasks:</strong> 30% of final score (Max 10 tasks)<br>
+            Slide the inputs below to see how the Python function calculates the total and categorizes the student!
+        </div>
+
+        <div class="workspace">
+            <div class="controls">
+                <h3>Student Inputs</h3>
+                
+                <div class="control-group">
+                    <label>Attendance Percentage <span id="attVal" class="val-display">85%</span></label>
+                    <input type="range" id="attInput" min="0" max="100" value="85" oninput="calculate()">
+                </div>
+
+                <div class="control-group">
+                    <label>Diary Entries <span id="diaryVal" class="val-display">12</span></label>
+                    <input type="range" id="diaryInput" min="0" max="15" value="12" oninput="calculate()">
+                </div>
+
+                <div class="control-group">
+                    <label>Tasks Completed <span id="taskVal" class="val-display">8</span></label>
+                    <input type="range" id="taskInput" min="0" max="10" value="8" oninput="calculate()">
+                </div>
+            </div>
+
+            <div class="code-window">
+                <div class="line"><span style="color: #569cd6">def</span> <span style="color: #dcdcaa">readiness_score</span>(att_pct, diary, tasks):</div>
+                
+                <div class="line indent-1" style="color: #6a9955"># Calculate weighted parts</div>
+                <div class="line indent-1">att_score = att_pct * <span style="color: #b5cea8">0.40</span></div>
+                <div class="line indent-1">diary_score = (diary / <span style="color: #b5cea8">15</span>) * <span style="color: #b5cea8">30</span></div>
+                <div class="line indent-1">task_score = (tasks / <span style="color: #b5cea8">10</span>) * <span style="color: #b5cea8">30</span></div>
+                <br>
+                <div class="line indent-1">total_score = att_score + diary_score + task_score</div>
+                <br>
+                <div class="line indent-1" style="color: #6a9955"># Apply Control Flow</div>
+                <div id="c1" class="line indent-1"><span style="color: #c586c0">if</span> total_score >= <span style="color: #b5cea8">80</span>:</div>
+                <div id="r1" class="line indent-2">band = <span style="color: #ce9178">"Ready for Deployment"</span></div>
+                
+                <div id="c2" class="line indent-1"><span style="color: #c586c0">elif</span> total_score >= <span style="color: #b5cea8">50</span>:</div>
+                <div id="r2" class="line indent-2">band = <span style="color: #ce9178">"Needs Improvement"</span></div>
+                
+                <div id="c3" class="line indent-1"><span style="color: #c586c0">else</span>:</div>
+                <div id="r3" class="line indent-2">band = <span style="color: #ce9178">"Critical Support Needed"</span></div>
+                <br>
+                <div class="line indent-1"><span style="color: #c586c0">return</span> total_score, band</div>
+            </div>
+        </div>
+
+        <div id="outputDisplay" class="output-box">
+            Calculated Score: <span id="finalScoreText" class="score-big">0</span> / 100<br>
+            <span id="finalBandText" style="font-size: 0.8em; color: #94a3b8;">Band: -</span>
+        </div>
+
+    </div>
+
+    <script>
+        function calculate() {
+            // Get values
+            let att = parseInt(document.getElementById('attInput').value);
+            let diary = parseInt(document.getElementById('diaryInput').value);
+            let tasks = parseInt(document.getElementById('taskInput').value);
+
+            // Update UI Labels
+            document.getElementById('attVal').innerText = att + '%';
+            document.getElementById('diaryVal').innerText = diary;
+            document.getElementById('taskVal').innerText = tasks;
+
+            // Python Logic Simulation
+            let att_score = att * 0.40;
+            let diary_score = (diary / 15) * 30;
+            let task_score = (tasks / 10) * 30;
+            
+            let total = Math.min(att_score + diary_score + task_score, 100);
+            total = Math.round(total);
+
+            // Reset Highlights
+            for(let i=1; i<=3; i++) {
+                document.getElementById('c'+i).classList.remove('active-condition');
+                document.getElementById('r'+i).classList.remove('active-condition');
+            }
+
+            // Apply IF/ELIF/ELSE logic and highlight code
+            let band = "";
+            if (total >= 80) {
+                band = "Ready for Deployment";
+                document.getElementById('c1').classList.add('active-condition');
+                document.getElementById('r1').classList.add('active-condition');
+            } else if (total >= 50) {
+                band = "Needs Improvement";
+                document.getElementById('c2').classList.add('active-condition');
+                document.getElementById('r2').classList.add('active-condition');
+            } else {
+                band = "Critical Support Needed";
+                document.getElementById('c3').classList.add('active-condition');
+                document.getElementById('r3').classList.add('active-condition');
+            }
+
+            // Display Output
+            document.getElementById('finalScoreText').innerText = total;
+            document.getElementById('finalBandText').innerText = "Band: " + band;
+        }
+
+        // Run once on load
+        calculate();
+    </script>
+</body>
+</html>
