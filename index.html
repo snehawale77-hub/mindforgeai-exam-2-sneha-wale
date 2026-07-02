@@ -50,22 +50,39 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 60px;
+            gap: 12px;
+            white-space: nowrap;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.1;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 30px;
+            gap: 24px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            white-space: nowrap;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .nav-links::-webkit-scrollbar-thumb {
+            background: rgba(37, 99, 235, 0.4);
+            border-radius: 999px;
         }
 
         .nav-links a {
@@ -74,6 +91,7 @@
             font-weight: 500;
             transition: var(--transition);
             position: relative;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
