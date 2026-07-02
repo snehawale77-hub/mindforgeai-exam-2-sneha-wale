@@ -46,17 +46,17 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 14px;
+            padding: 0 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 52px;
-            gap: 10px;
+            height: 56px;
+            gap: 16px;
             white-space: nowrap;
         }
 
         .logo {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.02em;
@@ -65,18 +65,25 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             white-space: nowrap;
+            flex-shrink: 0;
+            margin-right: 20px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: nowrap;
             overflow-x: auto;
-            padding-bottom: 2px;
+            padding-bottom: 4px;
             white-space: nowrap;
             flex: 1 1 auto;
             min-width: 0;
+            margin-left: 10px;
+        }
+
+        .nav-links li {
+            flex: 0 0 auto;
         }
 
         .nav-links::-webkit-scrollbar {
