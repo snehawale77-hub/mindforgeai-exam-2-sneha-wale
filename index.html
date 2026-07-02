@@ -78,10 +78,24 @@
             white-space: nowrap;
         }
 
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-right: 8px;
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 18px;
+            gap: 22px;
             flex-wrap: nowrap;
             overflow-x: auto;
             padding-bottom: 0;
@@ -98,23 +112,26 @@
             flex: 0 0 auto;
         }
 
-        /* Hide webkit scrollbar thumb by default, show on hover */
+        /* Hide webkit scrollbar thumb by default, show on hover (force-hide for stubborn systems) */
         .nav-links::-webkit-scrollbar {
-            height: 0;
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
         }
 
         .nav-links:hover::-webkit-scrollbar {
-            height: 6px;
+            display: block !important;
+            height: 6px !important;
+            width: auto !important;
         }
 
         .nav-links::-webkit-scrollbar-thumb {
-            background: transparent;
+            background: transparent !important;
             border-radius: 999px;
         }
 
         .nav-links:hover::-webkit-scrollbar-thumb {
-            background: rgba(37, 99, 235, 0.6);
-        }
+            background: rgba(37, 99, 235, 0.6) !important;
         }
 
         .nav-links a {
@@ -126,30 +143,6 @@
             position: relative;
             white-space: nowrap;
             padding: 8px 0;
-        }
-
-        .nav-links li {
-            flex: 0 0 auto;
-        }
-
-        .nav-links::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .nav-links::-webkit-scrollbar-thumb {
-            background: rgba(37, 99, 235, 0.6);
-            border-radius: 999px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark-text);
-            font-weight: 500;
-            font-size: 13px;
-            transition: var(--transition);
-            position: relative;
-            white-space: nowrap;
-            padding: 4px 0;
         }
 
         .nav-links a:hover {
