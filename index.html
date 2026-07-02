@@ -46,19 +46,20 @@
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 60px;
-            gap: 12px;
+            height: 52px;
+            gap: 10px;
             white-space: nowrap;
         }
 
         .logo {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
             line-height: 1.1;
+            letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -69,19 +70,21 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 24px;
+            gap: 16px;
             flex-wrap: nowrap;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
             white-space: nowrap;
+            flex: 1 1 auto;
+            min-width: 0;
         }
 
         .nav-links::-webkit-scrollbar {
-            height: 6px;
+            height: 4px;
         }
 
         .nav-links::-webkit-scrollbar-thumb {
-            background: rgba(37, 99, 235, 0.4);
+            background: rgba(37, 99, 235, 0.6);
             border-radius: 999px;
         }
 
@@ -89,9 +92,11 @@
             text-decoration: none;
             color: var(--dark-text);
             font-weight: 500;
+            font-size: 13px;
             transition: var(--transition);
             position: relative;
             white-space: nowrap;
+            padding: 4px 0;
         }
 
         .nav-links a:hover {
