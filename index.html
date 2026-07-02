@@ -50,15 +50,15 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            height: 56px;
-            gap: 16px;
+            height: 68px;
+            gap: 20px;
             white-space: nowrap;
         }
 
         .logo {
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 1.1;
+            line-height: 1;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
@@ -71,14 +71,25 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 18px;
             flex-wrap: nowrap;
             overflow-x: auto;
-            padding-bottom: 4px;
+            padding-bottom: 0;
             white-space: nowrap;
             margin-left: auto;
             justify-content: flex-end;
             min-width: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+            padding: 6px 0;
         }
 
         .nav-links li {
